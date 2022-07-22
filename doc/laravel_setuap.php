@@ -15,25 +15,29 @@ Laravel Project setuap
 9. composer require doctrine/dbal
 10. php artisan migrate:status
 
+git rm -rf --cached .
+
 cache:clearCommand
 php artisan cache:clear
 php artisan route:cache
 php artisan config:cache
 
-Create Migrate table 
+Create Migrate table
 php artisan make:migration create_salon_companies_table
 
 Remove migrate
 php artisan migrate:rollback
 
-Create Seeder table 
-php artisan make:seeder RoleSeeder   New seeder FileCreate
-php artisan db:seed  databaseseeder file call
+Create Seeder table
+php artisan make:seeder RoleSeeder New seeder FileCreate
+php artisan db:seed databaseseeder file call
 php artisan db:seed --class=RoleSeeder
 
 DB import in class
 use Illuminate\Support\Facades\DB;
 
+Custom Mail Uses
+php artisan vendor:publish --tag=laravel-mail
 
 Creating indexs db in key
 primary
@@ -127,19 +131,59 @@ https://github.com/itstructure/laravel-grid-view
 Multiple form clonData library
 https://www.jqueryscript.net/demo/clone-field-increment-id/
 
-Storage folder pass public
+Storage folder pass
 php artisan storage:link
 
 
 "Itstructure\\GridView\\": "composer/itstructure/laravel-grid-view/src/"
 
 'name' => 'required',
-            'panel' => 'required',
+'panel' => 'required',
 
 
 
-SET  @num := 0;
+SET @num := 0;
 
 UPDATE your_table SET id = @num := (@num+1);
 
 ALTER TABLE your_table AUTO_INCREMENT =1;
+
+
+
+Server Side databse export to seed file command
+
+php artisan iseed roles
+php artisan iseed modules
+php artisan iseed permissions
+php artisan iseed roles_access
+
+php artisan iseed salons
+php artisan iseed salon_modules
+php artisan iseed salon_permissions
+php artisan iseed salon_access
+php artisan iseed nofify_detail
+php artisan iseed price_tier
+php artisan iseed users
+php artisan iseed tax
+php artisan iseed form_element_type
+
+
+php artisan iseed closeddate
+
+php artisan iseed categories
+php artisan iseed services
+php artisan iseed services_price
+php artisan iseed staff_services
+php artisan iseed staff_working_hours
+
+Server file buid in laravel
+
+1.Create .env file
+2.php artisan migrate
+3.php artisan db:seed (Data insert in datatable)
+2.Api use command - php artisan passport:install
+
+
+Mail Send commnad
+
+php artisan make:mail classname
