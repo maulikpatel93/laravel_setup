@@ -18,7 +18,7 @@ class CreateBasicTable extends Migration
             $table->id();
             $table->string('name', 100);
             $table->enum('panel', ['Backend', 'Frontend', 'Common'])->default('Backend'); // 1:Active, 0:Inactive
-            $table->enum('is_active', ['0', '1'])->default(1); // 1:Active, 0:Inactive
+            $table->boolean('is_active')->default(1); // 1:Active, 0:Inactive
             $table->dateTime('is_active_at')->nullable();
             $table->timestamps();
         });
@@ -26,7 +26,7 @@ class CreateBasicTable extends Migration
         //php artisan make:migration create_users_table
         Schema::create('admins', function (Blueprint $table) {
             $table->id();
-            $table->string('auth_key', 80)->after('id')
+            $table->string('auth_key', 80)
                 ->unique()
                 ->nullable()
                 ->default(null);
@@ -34,15 +34,15 @@ class CreateBasicTable extends Migration
             $table->string('last_name', 100);
             $table->string('username', 100);
             $table->string('email', 100)->unique();
-            $table->enum('email_verified', [1, 0])->default(0); // 1:Verify, 0:Inverify
+            $table->boolean('email_verified')->default(0); // 1:Verify, 0:Inverify
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('phone_number', 20);
-            $table->enum('phone_number_verified', [1, 0])->default(0); // 1:Verify, 0:Inverify
+            $table->boolean('phone_number_verified')->default(0); // 1:Verify, 0:Inverify
             $table->timestamp('phone_number_verified_at')->nullable();
             $table->string('profile_photo', 100);
             $table->rememberToken();
-            $table->enum('is_active', ['0', '1'])->default(1); // 1:Active, 0:Inactive
+            $table->boolean('is_active')->default(1); // 1:Active, 0:Inactive
             $table->dateTime('is_active_at')->nullable();
             $table->timestamps();
         });
@@ -55,26 +55,23 @@ class CreateBasicTable extends Migration
         //php artisan make:migration create_users_table
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->enum('panel', ['Backend', 'Frontend', 'Common'])->after('id')->default('Backend'); // 1:Active, 0:Inactive
-            $table->string('auth_key', 80)->after('id')
-                ->unique()
-                ->nullable()
-                ->default(null);
+            $table->enum('panel', ['Backend', 'Frontend', 'Common'])->default('Backend'); // 1:Active, 0:Inactive
+            $table->string('auth_key', 80)->unique()->nullable()->default(null);
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->string('username', 100)->unique();
             $table->string('email', 100);
-            $table->string('email_otp', 10)->after('email')->nullable();
-            $table->enum('email_verified', [1, 0])->default(0); // 1:Verify, 0:Inverify
+            $table->string('email_otp', 10)->nullable();
+            $table->boolean('email_verified')->default(0); // 1:Verify, 0:Inverify
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('phone_number', 20);
-            $table->string('phone_number_otp', 10)->after('phone_number')->nullable();
-            $table->enum('phone_number_verified', [1, 0])->default(0); // 1:Verify, 0:Inverify
+            $table->string('phone_number_otp', 10)->nullable();
+            $table->boolean('phone_number_verified')->default(0); // 1:Verify, 0:Inverify
             $table->timestamp('phone_number_verified_at')->nullable();
             $table->string('profile_photo', 100)->nullable();
             $table->rememberToken();
-            $table->enum('is_active', ['0', '1'])->default(1); // 1:Active, 0:Inactive
+            $table->boolean('is_active')->default(1); // 1:Active, 0:Inactive
             $table->dateTime('is_active_at')->nullable();
             $table->timestamps();
         });
@@ -105,7 +102,7 @@ class CreateBasicTable extends Migration
         //php artisan make:migration create_modules_table
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
-            $table->enum('panel', ['Backend', 'Frontend', 'Common'])->default('Backend')->after('id'); // 1:Active, 0:Inactive
+            $table->enum('panel', ['Backend', 'Frontend', 'Common'])->default('Backend'); // 1:Active, 0:Inactive
             $table->string('title', 100);
             $table->string('controller', 100)->nullable();
             $table->string('action', 100)->nullable();
@@ -116,8 +113,8 @@ class CreateBasicTable extends Migration
             $table->integer('parent_submenu_id', false, true)->nullable();
             $table->integer('menu_position', false, true)->nullable();
             $table->integer('submenu_position', false, true)->nullable();
-            $table->enum('is_hiddden', ['0', '1'])->default('0');
-            $table->enum('is_active', ['0', '1'])->default('1'); // 1:Active, 0:Inactive
+            $table->boolean('is_hiddden')->default(0);
+            $table->boolean('is_active')->default(1); // 1:Active, 0:Inactive
             $table->dateTime('is_active_at')->nullable();
             $table->timestamps();
         });
@@ -140,7 +137,7 @@ class CreateBasicTable extends Migration
         //php artisan make:migration create_roles_access_table
         Schema::create('roles_access', function (Blueprint $table) {
             $table->id();
-            $table->enum('access', ['0', '1'])->default('1'); // 1:Active, 0:Inactive
+            $table->boolean('access')->default(1); // 1:Active, 0:Inactive
             $table->timestamps();
         });
 
@@ -159,7 +156,7 @@ class CreateBasicTable extends Migration
             $table->text('value')->nullable();
             $table->text('description')->nullable();
             $table->enum('type', ['Text', 'Textarea', 'File', 'Date', 'Time', 'Datetime', 'Radio', 'Checkbox', 'Select', 'Other'])->default('Text');
-            $table->enum('is_active', ['0', '1'])->default(1); // 1:Active, 0:Inactive
+            $table->boolean('is_active')->default(1); // 1:Active, 0:Inactive
             $table->dateTime('is_active_at')->nullable();
             $table->timestamps();
         });
@@ -170,7 +167,7 @@ class CreateBasicTable extends Migration
             $table->string('name')->unique();
             $table->text('title');
             $table->text('description');
-            $table->enum('is_active', ['0', '1'])->default(1); // 1:Active, 0:Inactive
+            $table->boolean('is_active')->default(1); // 1:Active, 0:Inactive
             $table->dateTime('is_active_at')->nullable();
             $table->timestamps();
         });
@@ -183,7 +180,7 @@ class CreateBasicTable extends Migration
             $table->string('subject')->nullable();
             $table->text('html');
             $table->enum('panel', ['Backend', 'Web', 'App', 'Common'])->default('Common');
-            $table->enum('is_active', ['0', '1'])->default(1); // 1:Active, 0:Inactive
+            $table->boolean('is_active')->default(1); // 1:Active, 0:Inactive
             $table->dateTime('is_active_at')->nullable();
             $table->timestamps();
         });
@@ -193,7 +190,7 @@ class CreateBasicTable extends Migration
             $table->id();
             $table->string('field');
             $table->text('description');
-            $table->enum('is_default', [1, 0])->default(0); // 1:Active, 0:Inactive
+            $table->boolean('is_default')->default(0); // 1:Active, 0:Inactive
             $table->timestamps();
         });
 
