@@ -8,6 +8,8 @@ Personal access tokens: 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
 
 ===============================
 
+Upgrade Node update command
+: npx npm-check-updates
 
 Server file buid in laravel
 
